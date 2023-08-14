@@ -54,7 +54,8 @@ RUN python -m venv /py && \
     # This command installs these dependencies.
     # The --virtual .tmp-build-deps means these packages are tagged with a label for easier removal later.
     apk add --update --no-cache --virtual .tmp-build-deps \
-        gcc libc-dev linux-headers postgresql-dev && \
+        # gcc libc-dev linux-headers postgresql-dev && \
+        build-base postgresql-dev musl-dev && \
 
     # It installs Python packages specified in the requirements.txt file.
     /py/bin/pip install -r /tmp/requirements.txt && \
