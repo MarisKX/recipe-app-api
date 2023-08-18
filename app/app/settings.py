@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-er(e_jzn^ck5t+k2)5e5!6ra0)&6s^5%-jv%)l&+*1*0+z4%ah
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -38,9 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Add Ons
+    'rest_framework',
+    'drf_spectacular',
+    'rest_framework.authtoken',
 
     # Custom apps:
     'core',
+    'user',
+    'recipe',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +136,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'core.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
