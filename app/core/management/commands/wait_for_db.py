@@ -10,9 +10,9 @@ from django.core.management.base import BaseCommand
 class Command(BaseCommand):
     # Django command to wait for db
 
-    def handle(self, *aergs, **options):
-        """EntryPoint for command"""
-        self.stdout.write('Waiting for db... ')
+    def handle(self, *args, **options):
+        """Entrypoint for command"""
+        self.stdout.write(self.style.WARNING('Waiting for db... '))
         db_up = False
         while db_up is False:
             try:

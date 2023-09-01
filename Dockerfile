@@ -42,20 +42,20 @@ ARG DEV=false
 
 # This creates a new virtual environment for Python in the /py directory.
 RUN python -m venv /py && \
-    
+
     # It upgrades pip (Python's package manager) inside the virtual environment.
     /py/bin/pip install --upgrade pip && \
 
     # It uses the Alpine package manager (apk) to install the PostgreSQL client.
     # This is useful if your application interacts with a PostgreSQL database.
-    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache postgresql-client jpeg-dev && \
 
     # Some Python packages require compilation and need specific system libraries to build.
     # This command installs these dependencies.
     # The --virtual .tmp-build-deps means these packages are tagged with a label for easier removal later.
     apk add --update --no-cache --virtual .tmp-build-deps \
         # gcc libc-dev linux-headers postgresql-dev && \
-        build-base postgresql-dev musl-dev && \
+        build-base postgresql-dev musl-dev zlib zlib-dev && \
 
     # It installs Python packages specified in the requirements.txt file.
     /py/bin/pip install -r /tmp/requirements.txt && \
@@ -66,11 +66,11 @@ RUN python -m venv /py && \
         then echo "--DEV BUILD--" && /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
 
-    # Deletes the temporary build dependencies that were labeled as .tmp-build-deps earlier.
-    apk del .tmp-build-deps && \
-
     # Removes any files in the /tmp directory to keep the Docker image clean.
     rm -rf /tmp && \
+
+    # Deletes the temporary build dependencies that were labeled as .tmp-build-deps earlier.
+    apk del .tmp-build-deps && \
 
     # Adds a new user named django-user without a password and without creating a home directory.
     # This is often done for security reasons:
@@ -78,7 +78,12 @@ RUN python -m venv /py && \
     adduser \
         --disabled-password \
         --no-create-home \
-        django-user
+        django-user && \
+    mkdir -p /vol/web/media && \
+    mkdir -p /vol/web/media && \
+    chown -R django-user:django-user /vol && \
+    chmod -R 755 /vol
+
 
 ENV PATH="/py/bin:$PATH"
 # ENV: This Dockerfile command is used to set environment variables.
