@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # Add Ons
     'rest_framework',
     'drf_spectacular',
@@ -132,6 +133,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/static/'
 MEDIA_URL = '/static/media/'
+
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
 

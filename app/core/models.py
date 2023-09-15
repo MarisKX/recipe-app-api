@@ -1,5 +1,5 @@
 """
-Database models.
+Database core models.
 """
 import uuid
 import os
