@@ -24,16 +24,13 @@ services:
       - db
 
   db:
-    restart: unless-stopped
     image: postgres:13-alpine
-    hostname: dev-db-data
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=maris
       - POSTGRES_PASSWORD=bv4811ss
-
 
 volumes:
   dev-db-data:
